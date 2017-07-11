@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csc.movie.dao.UserDAO">
+
+    <resultMap id="UserWatchedMovieResultMap" type="com.csc.movie.entity.User">
+        <id column="user_id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <collection property="watchedList" ofType="com.csc.movie.entity.Watched" column="user_id">
+            <result column="yourscore" property="score"/>
+            <result column="comment" property="comment" javaType="java.lang.String"/>
+            <association property="movie" javaType="com.csc.movie.entity.Movie">
+                <id column="movie_id" property="id"/>
+                <result column="name" property="name"/>
+                <result column="score" property="score"/>
+            </association>
+
+
+        </collection>
+    </resultMap>
+
+    <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <select id="query" resultMap="UserWatchedMovieResultMap">
+        SELECT
+            user_id,
+            username,
+            password
+        FROM
+            user
+        WHERE
+            username = #{username} and password = #{password}
+    </select>
+
+    <select id="queryFetchMovie" resultMap="UserWatchedMovieResultMap">
+        SELECT
+        u.user_id,u.username,u.password,m.movie_id,m.name ,m.score as score,w.score as yourscore,w.comment
+        FROM
+        user u,watched w,movie m
+        WHERE u.user_id = w.user_id AND w.movie_id = m.movie_id AND u.user_id = #{id}
+    </select>
+
+    <insert id="add">
+        INSERT INTO
+          USER(username,password)
+        VALUES
+          (#{username},#{password})
+
+    </insert>
+
+    <!--<select id="queryAll" resultType="Movie">
+        SELECT
+            id,
+            name,
+            score
+        FROM
+            movie
+        ORDER BY
+            id
+        LIMIT #{offset}, #{limit}
+    </select>-->
+
+    <select id="count" resultType="int">
+        SELECT
+        count(*)
+        FROM
+        movie
+    </select>
+
+    <!--<update id="reduceNumber">
+        UPDATE book
+        SET number = number - 1
+        WHERE
+            book_id = #{bookId}
+        AND number > 0
+    </update>-->
+</mapper>
