@@ -12,12 +12,10 @@
             <result column="yourscore" property="score"/>
             <result column="comment" property="comment" javaType="java.lang.String"/>
             <association property="movie" javaType="com.csc.movie.entity.Movie">
-                <id column="movie_id" property="id"/>
+                <id column="movie_id" property="movieId"/>
                 <result column="name" property="name"/>
                 <result column="score" property="score"/>
             </association>
-
-
         </collection>
     </resultMap>
 
@@ -48,6 +46,7 @@
           (#{username},#{password})
 
     </insert>
+
 
     <!--<select id="queryAll" resultType="Movie">
         SELECT
