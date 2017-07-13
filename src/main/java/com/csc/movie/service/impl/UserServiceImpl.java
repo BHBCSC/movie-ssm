@@ -1,3 +1,8 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
 package com.csc.movie.service.impl;
 
 import com.csc.movie.dao.UserDAO;
@@ -7,30 +12,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
-/**
- * Created by Administrator on 2017/6/13 0013.
- */
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDAO;
 
-    @Override
-    public User login(String username, String password) {
-        return userDAO.query(username,password);
+    public UserServiceImpl() {
     }
 
-    @Override
+    public User login(String username, String password) {
+        return this.userDAO.query(username, password);
+    }
+
     public boolean register(String username, String password) {
-        try{
-        userDAO.add(username, password);
-        } catch (DuplicateKeyException e){
+        try {
+            this.userDAO.add(username, password);
+            return true;
+        } catch (DuplicateKeyException var4) {
             return false;
         }
-        return true;
     }
 
-    public User queryFetchMovie(int id){
-        return userDAO.queryFetchMovie(id);
+    public User getMovieList(int id) {
+        return this.userDAO.queryFetchMovie(id);
     }
 }

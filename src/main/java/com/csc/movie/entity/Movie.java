@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Administrator on 2017/6/11 0011.
  */
 public class Movie {
-    private int id;
+    private int movieId;
     private String name;
     private float score;
     private List<Watched> watchedList;
@@ -17,14 +17,14 @@ public class Movie {
     @Override
     public String toString() {
         return "Movie{" +
-                "id=" + id +
+                "id=" + movieId +
                 ", name='" + name + '\'' +
                 ", score=" + score +
                 '}';
     }
 
-    public int getId() {
-        return id;
+    public int getMovieId() {
+        return movieId;
     }
 
     public String getName() {

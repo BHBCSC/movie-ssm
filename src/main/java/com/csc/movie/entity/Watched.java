@@ -12,6 +12,11 @@ public class Watched {
     public Watched() {
     }
 
+    public Watched(int score, String comment) {
+        this.score = score;
+        this.comment = comment;
+    }
+
     public Movie getMovie() {
         return movie;
     }
@@ -20,7 +25,7 @@ public class Watched {
     public String toString() {
         return "Watched{" +
                 //"user=" + user.getId() +
-                "movie=" + movie +
+                //"movie=" + movie +
                 ", score=" + score +
                 ", comment='" + comment + '\'' +
                 '}';

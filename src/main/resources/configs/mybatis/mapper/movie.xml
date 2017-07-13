@@ -7,24 +7,24 @@
     <select id="queryById" resultType="Movie" parameterType="int">
         <!-- 具体的sql -->
         SELECT
-            id,
+        movie_id,
             name,
             score
         FROM
             movie
         WHERE
-            id = #{id}
+        movie_id = #{id}
     </select>
 
     <select id="queryAll" resultType="Movie">
         SELECT
-            id,
+        movie_id,
             name,
             score
         FROM
             movie
         ORDER BY
-            id
+        movie_id
         LIMIT #{offset}, #{limit}
     </select>
 
@@ -34,12 +34,4 @@
         FROM
         movie
     </select>
-
-    <!--<update id="reduceNumber">
-        UPDATE book
-        SET number = number - 1
-        WHERE
-            book_id = #{bookId}
-        AND number > 0
-    </update>-->
 </mapper>

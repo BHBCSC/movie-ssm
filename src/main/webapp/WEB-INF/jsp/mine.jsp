@@ -1,5 +1,4 @@
-<%@ page import="com.csc.movie.entity.User" %>
-<%@ page import="com.csc.movie.entity.Watched" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2017/6/13 0013
@@ -14,26 +13,27 @@
     <title>Title</title>
 </head>
 <body>
+hi, ${username}
 <table align="center" border="4">
-
-
     <tr>
-        <th>name</th>
-        <th>score</th>
-        <th>your score</th>
-        <th>your comment</th>
+        <th>名字</th>
+        <th>分数</th>
+        <th>你的评分</th>
+        <th>你的评论</th>
+        <th>操作</th>
     </tr>
-${watchedList}
+
     <c:forEach var="watched" items="${watchedList}">
-    <tr>
-        <td>${watched["movie"].name}</td>
-        <td>${watched["movie"].score}</td>
-        <td>${watched.score}</td>
-        <td>${watched.comment}</td>
-    </tr>
+        <tr>
+            <td><a href="${contextPath}/movie/${watched.movie.movieId}/">
+                    ${watched.movie.name}
+            </a></td>
+            <td>${watched.movie.score}</td>
+            <td>${watched.score}</td>
+            <td>${watched.comment}</td>
+            <td><a href="{contextPath}/movie/${watched.movie.movieId}/delete">删除</a></td>
+        </tr>
     </c:forEach>
-
-
 </table>
 </body>
 </html>

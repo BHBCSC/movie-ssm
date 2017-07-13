@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csc.movie.dao.WatchedDAO">
+    <select id="count" resultType="int">
+        SELECT count(*)
+        FROM
+            movie
+    </select>
+
+    <select id="queryWatched" resultType="com.csc.movie.entity.Watched">
+        SELECT
+            score,
+            comment
+        FROM
+            watched
+        WHERE user_id = #{userId} AND movie_id = #{movieId}
+    </select>
+
+    <insert id="insertWatched">
+        INSERT INTO
+            watched (user_id, movie_id, score, comment)
+        VALUES
+            (#{userId}, #{movieId}, #{score}, #{comment})
+    </insert>
+
+    <update id="updateWatched">
+        UPDATE
+            watched
+        SET
+            score = #{score}, comment = #{comment}
+        WHERE
+            user_id = #{userId}
+            AND
+            movie_id = #{movieId}
+    </update>
+
+    <delete id="deleteWatched">
+        DELETE FROM
+            watched
+        WHERE
+            user_id = #{userId} AND movie_id = #{movieId}
+    </delete>
+</mapper>
