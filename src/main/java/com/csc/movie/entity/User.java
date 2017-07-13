@@ -1,7 +1,6 @@
 package com.csc.movie.entity;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2017/6/11 0011.
