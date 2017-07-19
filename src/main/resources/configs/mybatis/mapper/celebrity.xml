@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.csc.movie.dao.ActorDAO">
-    <resultMap id="ActorResultMap" type="com.csc.movie.entity.Actor">
+<mapper namespace="com.csc.movie.dao.CelebrityDAO">
+    <resultMap id="ActorResultMap" type="com.csc.movie.entity.Celebrity">
         <id column="actor_id" property="id" />
         <result column="name" property="name" />
         <collection property="movieList" ofType="com.csc.movie.entity.Movie" column="actor_id">
