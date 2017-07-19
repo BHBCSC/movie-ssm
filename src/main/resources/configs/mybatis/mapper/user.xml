@@ -6,8 +6,8 @@
 
     <resultMap id="UserWatchedMovieResultMap" type="com.csc.movie.entity.User">
         <id column="user_id" property="id"/>
-        <result column="username" property="username"/>
-        <result column="password" property="password"/>
+        <!--<result column="username" property="username"/>
+        <result column="password" property="password"/>-->
         <collection property="watchedList" ofType="com.csc.movie.entity.Watched" column="user_id">
             <result column="yourscore" property="score"/>
             <result column="comment" property="comment" javaType="java.lang.String"/>
@@ -33,7 +33,7 @@
 
     <select id="queryFetchMovie" resultMap="UserWatchedMovieResultMap">
         SELECT
-        u.user_id,u.username,u.password,m.movie_id,m.name ,m.score as score,w.score as yourscore,w.comment
+        u.user_id,m.movie_id,m.name ,m.score as score,w.score as yourscore,w.comment
         FROM
         user u,watched w,movie m
         WHERE u.user_id = w.user_id AND w.movie_id = m.movie_id AND u.user_id = #{id}

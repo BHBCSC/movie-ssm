@@ -24,13 +24,21 @@ public class MovieController {
 
     @RequestMapping({"/"})
     public ModelAndView detail(@PathVariable int movieId, HttpSession session) {
-        int userId = ((Integer) session.getAttribute("userId")).intValue();
-        Movie movie = this.movieService.getMovieById(movieId);
-        Watched watched = this.movieService.movieWathced(userId, movieId);
-        System.out.println(movie.getMovieId());
+        int userId;
+        Movie movie;
+        Watched watched;
         ModelAndView modelAndView = new ModelAndView("show");
-        modelAndView.addObject("movie", movie);
-        modelAndView.addObject("watched", watched);
+        try {
+            movie = movieService.getMovieById(movieId);
+            modelAndView.addObject("movie", movie);
+
+            userId = ((Integer) session.getAttribute("userId")).intValue();
+            watched = movieService.movieWathced(userId, movieId);
+            modelAndView.addObject("watched", watched);
+        } catch (NullPointerException e) {
+            modelAndView.addObject("watched", null);
+            return modelAndView;
+        }
         return modelAndView;
     }
 
@@ -38,14 +46,14 @@ public class MovieController {
     public ModelAndView watched(@PathVariable int movieId, @RequestParam("score") int score, @RequestParam("comment") String comment, HttpSession session) {
         Watched watched = new Watched(score, comment);
         int userId = ((Integer) session.getAttribute("userId")).intValue();
-        this.movieService.doMovieWatched(userId, movieId, watched);
-        return this.detail(movieId, session);
+        movieService.doMovieWatched(userId, movieId, watched);
+        return detail(movieId, session);
     }
 
     @RequestMapping({"/delete"})
     public ModelAndView delete(@PathVariable int movieId, HttpSession session) {
         int userId = ((Integer) session.getAttribute("userId")).intValue();
-        this.movieService.doWatchedDelete(userId, movieId);
-        return this.detail(movieId, session);
+        movieService.doWatchedDelete(userId, movieId);
+        return detail(movieId, session);
     }
 }

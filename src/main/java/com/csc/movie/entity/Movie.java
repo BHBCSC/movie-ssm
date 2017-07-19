@@ -10,6 +10,7 @@ public class Movie {
     private String name;
     private float score;
     private List<Watched> watchedList;
+    private List<Celebrity> celebrityList;
 
     public Movie(){}
 

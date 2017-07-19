@@ -19,25 +19,27 @@ public class MovieServiceImpl implements MovieService {
     }
 
     public Movie getMovieById(int id) {
-        return this.movieDAO.queryById(id);
+        return movieDAO.queryById(id);
     }
 
+    //
     public Watched movieWathced(int userId, int movieId) {
-        return this.watchedDAO.queryWatched(userId, movieId);
+        return watchedDAO.queryWatched(userId, movieId);
     }
 
+    //看过就修改，没看过就增加
     public void doMovieWatched(int userId, int movieId, Watched watched) {
         Watched gotWatched = this.movieWathced(userId, movieId);
         if (gotWatched != null) {
-            this.watchedDAO.updateWatched(userId, movieId, watched.getScore(), watched.getComment());
+            watchedDAO.updateWatched(userId, movieId, watched.getScore(), watched.getComment());
         } else {
-            this.watchedDAO.insertWatched(userId, movieId, watched.getScore(), watched.getComment());
+            watchedDAO.insertWatched(userId, movieId, watched.getScore(), watched.getComment());
         }
 
     }
 
     public boolean doWatchedDelete(int userId, int movieId) {
-        Watched watched = this.movieWathced(userId, movieId);
-        return watched != null && this.watchedDAO.deleteWatched(userId, movieId) > 0;
+        Watched watched = movieWathced(userId, movieId);
+        return watched != null && watchedDAO.deleteWatched(userId, movieId) > 0;
     }
 }

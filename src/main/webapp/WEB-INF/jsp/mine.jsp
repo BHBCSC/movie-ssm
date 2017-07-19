@@ -20,7 +20,7 @@ hi, ${username}
         <th>分数</th>
         <th>你的评分</th>
         <th>你的评论</th>
-        <th>操作</th>
+        <%--<th>操作</th>--%>
     </tr>
 
     <c:forEach var="watched" items="${watchedList}">
@@ -31,7 +31,7 @@ hi, ${username}
             <td>${watched.movie.score}</td>
             <td>${watched.score}</td>
             <td>${watched.comment}</td>
-            <td><a href="{contextPath}/movie/${watched.movie.movieId}/delete">删除</a></td>
+                <%--<td><a href="{contextPath}/movie/${watched.movie.movieId}/delete">删除</a></td>--%>
         </tr>
     </c:forEach>
 </table>
