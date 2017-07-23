@@ -3,39 +3,34 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.csc.movie.dao.CelebrityDAO">
-    <resultMap id="ActorResultMap" type="com.csc.movie.entity.Celebrity">
-        <id column="actor_id" property="id" />
-        <result column="name" property="name" />
-        <collection property="movieList" ofType="com.csc.movie.entity.Movie" column="actor_id">
-            <id column="movie_id" property="id"/>
-            <result column="name" property="name"/>
+    <resultMap id="CelebrityMovieResultMap" type="com.csc.movie.entity.Celebrity">
+        <id column="celebrity_id" property="celebrityId"/>
+        <result column="c_name" property="name"/>
+        <result column="age" property="age"/>
+        <collection property="movieList" ofType="com.csc.movie.entity.Movie" column="movie_id">
+            <id column="movie_id" property="movieId"/>
+            <result column="m_name" property="name"/>
             <result column="score" property="score"/>
         </collection>
     </resultMap>
-    
-    <!-- 目的：为dao接口方法提供sql语句配置 -->
-    <select id="queryById" resultType="Actor" parameterType="int">
+
+    <select id="queryById" resultMap="CelebrityMovieResultMap">
         <!-- 具体的sql -->
         SELECT
-            id,
-            name
+        m.movie_id,
+        m.name as m_name,
+        m.score,
+        c.celebrity_id,
+        c.name as c_name,
+        c.age
         FROM
-            actor
+        movie m,act a,celebrity c
         WHERE
-            id = #{id}
+        m.movie_id = a.movie_id AND a.celebrity_id = c.celebrity_id AND c.celebrity_id = #{id}
+        LIMIT #{limit}
     </select>
 
-    <select id="queryByMovie" resultMap = "ActorResultMap" parameterType="int">
-        <!-- 具体的sql -->
-        SELECT
-        a.*, m.*
-        FROM
-        actor a,movie m
-        WHERE
-        a.actor_id = m.actor_id AND a.actor_id = #{id}
-    </select>
-
-    <select id="queryAll" resultType="Actor">
+    <select id="queryAll" resultType="Celebrity">
         SELECT
             id,
             name
@@ -46,8 +41,6 @@
         LIMIT #{offset}, #{limit}
     </select>
 
-
-
     <select id="count" resultType="int">
         SELECT
         count(*)
@@ -55,11 +48,5 @@
         movie
     </select>
 
-    <!--<update id="reduceNumber">
-        UPDATE book
-        SET number = number - 1
-        WHERE
-            book_id = #{bookId}
-        AND number > 0
-    </update>-->
+    <cache-ref namespace="com.csc.movie.dao.MovieDAO"/>
 </mapper>

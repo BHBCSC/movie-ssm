@@ -14,8 +14,10 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 
-    <context:property-placeholder location=
-    "classpath:configs/jdbc.properties"/>
+    <context:component-scan base-package="com.csc.movie.dao"/>
+
+    <context:property-placeholder location="classpath:configs/jdbc.properties" ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath:configs/redis.properties" ignore-unresolvable="true"/>
 
     <!-- 数据库连接池 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -26,8 +28,8 @@
         <property name="password" value="${jdbc.password}" />
 
         <!-- c3p0连接池的私有属性 -->
-        <property name="maxPoolSize" value="30" />
-        <property name="minPoolSize" value="10" />
+        <property name="maxPoolSize" value="2"/>
+        <property name="minPoolSize" value="2"/>
         <!-- 关闭连接后不自动commit -->
         <property name="autoCommitOnClose" value="false" />
         <!-- 获取连接超时时间 -->
@@ -54,5 +56,32 @@
         <!-- 给出需要扫描Dao接口包 -->
         <property name="basePackage" value="com.csc.movie.dao" />
     </bean>
+
+    <!--Jedis连接池的相关配置-->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!--新版是maxTotal，旧版是maxActive-->
+        <property name="minIdle" value="${redis.pool.minIdle}"/>
+        <property name="maxTotal" value="${redis.pool.maxActive}"/>
+        <property name="maxIdle" value="${redis.pool.maxIdle}"/>
+        <!--<property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="true"/>-->
+    </bean>
+
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg name="host" value="${redis.host}"/>
+        <constructor-arg name="port" value="${redis.port}" type="int"/>
+    </bean>
+
+
+    <!--<bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+          &lt;!&ndash;p:host-name="${redis.host}" p:port="${redis.port}" p:password="${redis.pass}"&ndash;&gt;
+        <property name="hostName" value="${redis.host}"></property>
+        <property name="port" value="${redis.port}"></property>
+        <property name="password" value="${redis.pass}"></property>
+    </bean> &lt;!&ndash; p:pool-config-ref="poolConfig"&ndash;&gt;
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+    </bean>-->
 
 </beans>

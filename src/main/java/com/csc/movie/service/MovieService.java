@@ -10,9 +10,13 @@ import com.csc.movie.entity.Watched;
 public interface MovieService {
     Movie getMovieById(int movieId);
 
+    Movie getMovieByIdLimit(int id);
+
     Watched movieWathced(int userId, int movieId);
 
     void doMovieWatched(int userId, int movieId, Watched watched);
 
     boolean doWatchedDelete(int userId, int movieId);
+
+    void updateMovieScore(int movieId);
 }

@@ -22,18 +22,18 @@ public class AccountController {
 
     @RequestMapping({"/login"})
     public String login() {
-        return "login";
+        return "account/login";
     }
 
     @RequestMapping(value = {"/dologin"}, method = {RequestMethod.POST})
     public String dologin(User user, HttpSession session) {
         if ((user = this.userService.login(user.getUsername(), user.getPassword())) != null) {
             session.setAttribute("username", user.getUsername());
-            session.setAttribute("userId", Integer.valueOf(user.getId()));
+            session.setAttribute("userId", user.getId());
 
             return "redirect:/user/mine";
         } else {
-            return "login";
+            return "account/login";
         }
     }
 

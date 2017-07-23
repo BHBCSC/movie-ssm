@@ -37,6 +37,7 @@
         FROM
         user u,watched w,movie m
         WHERE u.user_id = w.user_id AND w.movie_id = m.movie_id AND u.user_id = #{id}
+
     </select>
 
     <insert id="add">

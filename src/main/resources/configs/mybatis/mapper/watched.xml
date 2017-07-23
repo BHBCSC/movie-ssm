@@ -9,7 +9,7 @@
             movie
     </select>
 
-    <select id="queryWatched" resultType="com.csc.movie.entity.Watched">
+    <select id="query" resultType="com.csc.movie.entity.Watched">
         SELECT
             score,
             comment
@@ -18,14 +18,22 @@
         WHERE user_id = #{userId} AND movie_id = #{movieId}
     </select>
 
-    <insert id="insertWatched">
+    <select id="queryWatchedScoreFetchMovieId" resultType="com.csc.movie.entity.Watched">
+        SELECT score
+        FROM
+            watched
+        WHERE
+            movie_id = #{movieId}
+    </select>
+
+    <insert id="insert">
         INSERT INTO
             watched (user_id, movie_id, score, comment)
         VALUES
             (#{userId}, #{movieId}, #{score}, #{comment})
     </insert>
 
-    <update id="updateWatched">
+    <update id="update">
         UPDATE
             watched
         SET
@@ -36,7 +44,7 @@
             movie_id = #{movieId}
     </update>
 
-    <delete id="deleteWatched">
+    <delete id="delete">
         DELETE FROM
             watched
         WHERE

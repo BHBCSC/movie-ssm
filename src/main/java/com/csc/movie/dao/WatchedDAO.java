@@ -4,12 +4,16 @@ package com.csc.movie.dao;
 import com.csc.movie.entity.Watched;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface WatchedDAO {
-    Watched queryWatched(@Param("userId") int userId, @Param("movieId") int movieId);
+    Watched query(@Param("userId") int userId, @Param("movieId") int movieId);
 
-    void insertWatched(@Param("userId") int userId, @Param("movieId") int movieId, @Param("score") int score, @Param("comment") String comment);
+    void insert(@Param("userId") int userId, @Param("movieId") int movieId, @Param("score") int score, @Param("comment") String comment);
 
-    void updateWatched(@Param("userId") int userId, @Param("movieId") int movieId, @Param("score") int score, @Param("comment") String comment);
+    int update(@Param("userId") int userId, @Param("movieId") int movieId, @Param("score") int score, @Param("comment") String comment);
 
-    int deleteWatched(@Param("userId") int userId, @Param("movieId") int movieId);
+    int delete(@Param("userId") int userId, @Param("movieId") int movieId);
+
+    List<Watched> queryWatchedScoreFetchMovieId(@Param("movieId") int movieId);
 }

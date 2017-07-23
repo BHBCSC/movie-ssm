@@ -22,17 +22,17 @@ public class MovieController {
     public MovieController() {
     }
 
-    @RequestMapping({"/"})
+    @RequestMapping({""})
     public ModelAndView detail(@PathVariable int movieId, HttpSession session) {
         int userId;
         Movie movie;
         Watched watched;
-        ModelAndView modelAndView = new ModelAndView("show");
+        ModelAndView modelAndView = new ModelAndView("movie/show");
         try {
-            movie = movieService.getMovieById(movieId);
+            movie = movieService.getMovieByIdLimit(movieId);
             modelAndView.addObject("movie", movie);
 
-            userId = ((Integer) session.getAttribute("userId")).intValue();
+            userId = (Integer) session.getAttribute("userId");
             watched = movieService.movieWathced(userId, movieId);
             modelAndView.addObject("watched", watched);
         } catch (NullPointerException e) {
@@ -45,15 +45,24 @@ public class MovieController {
     @RequestMapping({"/watched"})
     public ModelAndView watched(@PathVariable int movieId, @RequestParam("score") int score, @RequestParam("comment") String comment, HttpSession session) {
         Watched watched = new Watched(score, comment);
-        int userId = ((Integer) session.getAttribute("userId")).intValue();
+        int userId = (Integer) session.getAttribute("userId");
         movieService.doMovieWatched(userId, movieId, watched);
         return detail(movieId, session);
     }
 
     @RequestMapping({"/delete"})
     public ModelAndView delete(@PathVariable int movieId, HttpSession session) {
-        int userId = ((Integer) session.getAttribute("userId")).intValue();
+        int userId = (Integer) session.getAttribute("userId");
         movieService.doWatchedDelete(userId, movieId);
         return detail(movieId, session);
+    }
+
+    @RequestMapping({"/celebrities"})
+    public ModelAndView celebrities(@PathVariable int movieId) {
+        Movie movie = movieService.getMovieById(movieId);
+        ModelAndView modelAndView = new ModelAndView("movie/celebrities");
+        modelAndView.addObject("movie", movie);
+
+        return modelAndView;
     }
 }

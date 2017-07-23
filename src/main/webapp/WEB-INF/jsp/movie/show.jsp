@@ -14,8 +14,13 @@
     <title>Title</title>
 </head>
 <body>
-name is : ${movie.name}<br>
-score is : ${movie.score}<br>
+电影名: ${movie.name}<br>
+分数: ${movie.score}<br>
+演员：<c:forEach var="celebrity" items="${movie.celebrityList}">
+    <a href="${contextPath}/celebrity/${celebrity.celebrityId}">${celebrity.name}</a>
+</c:forEach><a href="${contextPath}/movie/${movie.movieId}/celebrities">全部</a>
+<br>
+
 <c:choose>
     <c:when test="${not empty watched}">
         <form action="${contextPath}/movie/${movie.movieId}/watched" method="post">

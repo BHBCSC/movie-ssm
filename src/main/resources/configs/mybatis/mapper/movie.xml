@@ -3,17 +3,30 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.csc.movie.dao.MovieDAO">
-    <!-- 目的：为dao接口方法提供sql语句配置 -->
-    <select id="queryById" resultType="Movie" parameterType="int">
+    <resultMap id="MovieCelebrityMap" type="com.csc.movie.entity.Movie">
+        <id column="movie_id" property="movieId"/>
+        <result column="m_name" property="name"></result>
+        <result column="score" property="score"></result>
+        <collection property="celebrityList" ofType="com.csc.movie.entity.Celebrity" column="celebrity_id">
+            <id column="celebrity_id" property="celebrityId"></id>
+            <result column="c_name" property="name"></result>
+            <result column="age" property="age"></result>
+        </collection>
+    </resultMap>
+    <select id="queryById" resultMap="MovieCelebrityMap">
         <!-- 具体的sql -->
         SELECT
-        movie_id,
-            name,
-            score
+        m.movie_id,
+        m.name as m_name,
+        m.score,
+        c.celebrity_id,
+        c.name as c_name,
+        c.age
         FROM
-            movie
+        movie m,act a,celebrity c
         WHERE
-        movie_id = #{id}
+        m.movie_id = a.movie_id AND a.celebrity_id = c.celebrity_id AND m.movie_id = #{id}
+        LIMIT #{limit}
     </select>
 
     <select id="queryAll" resultType="Movie">
@@ -28,10 +41,21 @@
         LIMIT #{offset}, #{limit}
     </select>
 
+    <update id="update">
+        UPDATE
+            movie
+        SET
+            score = #{score}
+        WHERE
+            movie_id = #{movieId}
+    </update>
+
     <select id="count" resultType="int">
         SELECT
         count(*)
         FROM
         movie
     </select>
+
+    <cache/>
 </mapper>

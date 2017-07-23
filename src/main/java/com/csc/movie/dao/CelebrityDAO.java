@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Administrator on 2017/6/11 0011.
  */
 public interface CelebrityDAO {
-    Celebrity queryById(int id);
+    Celebrity queryById(@Param("id") int id, @Param("limit") int limit);
 
     List<Celebrity> queryAll(@Param("offset") int offset, @Param("limit") int limit);
 

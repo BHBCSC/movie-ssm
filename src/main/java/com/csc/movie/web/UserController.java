@@ -21,8 +21,9 @@ public class UserController {
 
     @RequestMapping({"/mine"})
     public ModelAndView showMine(HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("mine");
+        ModelAndView modelAndView = new ModelAndView("/user/mine");
         User user = userService.getMovieList(((Integer) session.getAttribute("userId")));
+        modelAndView.addObject("username", user.getUsername());
         modelAndView.addObject("watchedList", user.getWatchedList());
         return modelAndView;
     }
