@@ -20,13 +20,17 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl() {
     }
 
+    public User checkUserName(String username) {
+        return userDAO.queryByUserName(username);
+    }
+
     public User login(String username, String password) {
-        return this.userDAO.query(username, password);
+        return userDAO.query(username, password);
     }
 
     public boolean register(String username, String password) {
         try {
-            this.userDAO.add(username, password);
+            userDAO.add(username, password);
             return true;
         } catch (DuplicateKeyException var4) {
             return false;
@@ -34,6 +38,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public User getMovieList(int id) {
-        return this.userDAO.queryFetchMovie(id);
+        return userDAO.queryFetchMovie(id);
     }
 }

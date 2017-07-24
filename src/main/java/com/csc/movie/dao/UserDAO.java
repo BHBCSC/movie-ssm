@@ -19,4 +19,6 @@ public interface UserDAO {
     void add(@Param("username") String username,@Param("password") String password) throws DuplicateKeyException;
 
     User queryFetchMovie(int id);
+
+    User queryByUserName(@Param("username") String username);
 }

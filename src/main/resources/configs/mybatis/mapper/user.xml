@@ -6,8 +6,8 @@
 
     <resultMap id="UserWatchedMovieResultMap" type="com.csc.movie.entity.User">
         <id column="user_id" property="id"/>
-        <!--<result column="username" property="username"/>
-        <result column="password" property="password"/>-->
+        <result column="username" property="username"/>
+
         <collection property="watchedList" ofType="com.csc.movie.entity.Watched" column="user_id">
             <result column="yourscore" property="score"/>
             <result column="comment" property="comment" javaType="java.lang.String"/>
@@ -19,7 +19,14 @@
         </collection>
     </resultMap>
 
-    <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <select id="queryByUserName" resultType="com.csc.movie.entity.User">
+        SELECT username
+        FROM
+            user
+        WHERE
+            username = #{username}
+    </select>
+
     <select id="query" resultMap="UserWatchedMovieResultMap">
         SELECT
             user_id,
@@ -33,7 +40,7 @@
 
     <select id="queryFetchMovie" resultMap="UserWatchedMovieResultMap">
         SELECT
-        u.user_id,m.movie_id,m.name ,m.score as score,w.score as yourscore,w.comment
+        u.user_id,u.username,m.movie_id,m.name ,m.score as score,w.score as yourscore,w.comment
         FROM
         user u,watched w,movie m
         WHERE u.user_id = w.user_id AND w.movie_id = m.movie_id AND u.user_id = #{id}
@@ -47,7 +54,6 @@
           (#{username},#{password})
 
     </insert>
-
 
     <!--<select id="queryAll" resultType="Movie">
         SELECT
@@ -67,12 +73,4 @@
         FROM
         movie
     </select>
-
-    <!--<update id="reduceNumber">
-        UPDATE book
-        SET number = number - 1
-        WHERE
-            book_id = #{bookId}
-        AND number > 0
-    </update>-->
 </mapper>

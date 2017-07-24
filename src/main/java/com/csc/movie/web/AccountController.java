@@ -39,7 +39,7 @@ public class AccountController {
 
     @RequestMapping({"/register"})
     public String register() {
-        return "register";
+        return "account/register";
     }
 
     @RequestMapping(
@@ -50,4 +50,9 @@ public class AccountController {
         return userService.register(user.getUsername(), user.getPassword()) ? "success" : "failure";
     }
 
+    @RequestMapping({"/checkUserName"})
+    public User checkUserName(String username) {
+        System.out.println(username);
+        return userService.checkUserName(username);
+    }
 }

@@ -9,4 +9,6 @@ public interface UserService {
     boolean register(String username, String password);
 
     User getMovieList(int movieId);
+
+    public User checkUserName(String username);
 }
