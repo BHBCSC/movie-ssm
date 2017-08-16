@@ -12,12 +12,12 @@
     <title>register</title>
     <script src="${contextPath}/resources/js/jquery-3.2.1.min.js"></script>
     <script src="${contextPath}/resources/js/submit-check.js"></script>
-    <script src="${contextPath}/resources/js/blur-check.js"></script>
-
+    <script src="${contextPath}/resources/js/blur-empty-check.js"></script>
+    <script src="${contextPath}/resources/js/blur-username-check.js"></script>
 </head>
 <body>
 reg<br/>
-<form action="${contextPath}/account/doreg" method="post">
+<form tyle="text-align: center" action="${contextPath}/account/doreg" method="post">
     <p>username: <input type="text" name="username" id="username"><span id="username-span"></span></p>
     <p>password: <input type="password" name="password" id="password"><span id="password-span"></span></p>
     <p><input id="submit" type="submit" value="submit">

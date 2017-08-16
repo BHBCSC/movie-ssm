@@ -9,7 +9,6 @@ import com.csc.movie.dao.UserDAO;
 import com.csc.movie.entity.User;
 import com.csc.movie.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,24 +19,8 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl() {
     }
 
-    public User checkUserName(String username) {
-        return userDAO.queryByUserName(username);
-    }
 
-    public User login(String username, String password) {
-        return userDAO.query(username, password);
-    }
-
-    public boolean register(String username, String password) {
-        try {
-            userDAO.add(username, password);
-            return true;
-        } catch (DuplicateKeyException var4) {
-            return false;
-        }
-    }
-
-    public User getMovieList(int id) {
-        return userDAO.queryFetchMovie(id);
+    public User getMovieList(String username) {
+        return userDAO.queryFetchMovie(username);
     }
 }

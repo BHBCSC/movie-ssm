@@ -1,0 +1,43 @@
+
+label {
+    font-weight: 300;
+    margin-bottom: 7px;
+}
+
+form {
+    display: block;
+}
+
+.form-control {
+    min-height: 34px;
+    padding: 6px 8px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #24292e;
+    vertical-align: middle;
+    border: 1px solid #d1d5da;
+    border-radius: 3px;
+    outline: none;
+}
+
+.main_box {
+    margin: 0 auto;
+    width: 400px;
+
+}
+
+.login_box {
+    display: block;
+    margin: 20px;
+
+    background: #e0a89c;
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+}
+
+.login_form {
+    /*margin:auto 0;*/
+    display: block;
+    padding: 50px;
+    font-size: 16px;
+}

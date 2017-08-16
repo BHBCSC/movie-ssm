@@ -1,9 +1,11 @@
-package com.csc.movie.web;
+package com.csc.movie.web.controller;
 
 import com.csc.movie.entity.User;
 import com.csc.movie.service.UserService;
 
 import javax.servlet.http.HttpSession;
+
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,14 +18,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     public UserController() {
     }
 
     @RequestMapping({"/mine"})
     public ModelAndView showMine(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("/user/mine");
-        User user = userService.getMovieList(((Integer) session.getAttribute("userId")));
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        User user = userService.getMovieList(username);
         modelAndView.addObject("watchedList", user.getWatchedList());
         return modelAndView;
     }
+
 }

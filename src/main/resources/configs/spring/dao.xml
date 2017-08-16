@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-4.2.xsd
-        http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
-        http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
     <context:component-scan base-package="com.csc.movie.dao"/>
 
@@ -67,9 +60,22 @@
         <property name="testOnReturn" value="true"/>-->
     </bean>
 
-    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
-        <constructor-arg name="host" value="${redis.host}"/>
-        <constructor-arg name="port" value="${redis.port}" type="int"/>
+    <!--jedis 连接工厂-->
+    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <!--p:host-name="${redis.host}" p:port="${redis.port}" p:password="${redis.pass}"-->
+        <property name="hostName" value="192.168.126.128"/>
+        <property name="port" value="6379"/>
+        <property name="password" value=""/>
+        <property name="poolConfig" ref="jedisPoolConfig"/>
+    </bean>
+
+    <!--Spring Redis连接模版-->
+    <bean id="stringRedis" class="org.springframework.data.redis.core.StringRedisTemplate">
+        <constructor-arg name="connectionFactory" ref="connectionFactory"/>
+    </bean>
+
+    <bean id="redis" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
     </bean>
 
 

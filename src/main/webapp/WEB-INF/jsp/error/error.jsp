@@ -11,6 +11,8 @@
     <title>failure</title>
 </head>
 <body>
+<p>发生不可预计错误
+</p>
 failure
 </body>
 </html>

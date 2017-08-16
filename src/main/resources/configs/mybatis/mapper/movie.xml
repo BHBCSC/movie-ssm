@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.csc.movie.dao.MovieDAO">
     <resultMap id="MovieCelebrityMap" type="com.csc.movie.entity.Movie">
         <id column="movie_id" property="movieId"/>
@@ -56,6 +56,39 @@
         FROM
         movie
     </select>
+
+    <select id="queryLikeName" resultType="com.csc.movie.entity.Movie">
+        SELECT
+            movie_id,
+            name,
+            score
+        FROM
+            movie
+        WHERE
+            name LIKE CONCAT('%', #{name}, '%')
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="queryLikeNameCount" resultType="int">
+        SELECT count(*)
+        FROM
+            movie
+        WHERE
+            name LIKE CONCAT('%', #{name}, '%')
+    </select>
+
+    <insert id="add">
+        INSERT INTO
+            movie (name)
+        VALUES (#{name})
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM
+            movie
+        WHERE
+            movie_id = #{id}
+    </delete>
 
     <cache/>
 </mapper>

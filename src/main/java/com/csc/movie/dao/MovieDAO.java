@@ -17,4 +17,14 @@ public interface MovieDAO {
     int count();
 
     void update(@Param("movieId") int movieId, @Param("score") float score);
+
+    List<Movie> queryLikeName(@Param("name") String name, @Param("offset") int offset, @Param("limit") int limit);
+
+    int queryLikeNameCount(String name);
+
+    void add(String name);
+
+    void modify(@Param("movieId") int id, @Param("name") String name);
+
+    void delete(int id);
 }

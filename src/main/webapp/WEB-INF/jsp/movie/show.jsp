@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -28,7 +29,7 @@
             评价：<input type="text" name="comment" value="${watched.comment}"><br>
             <input type="submit" value="提交修改">
         </form>
-        <a href="${contextPath}/movie/${movie.movieId}/delete">没看过</a>
+        <a href="${contextPath}/movie/${movie.movieId}/watched/delete">删除</a>
     </c:when>
 
     <c:otherwise>
@@ -40,4 +41,5 @@
     </c:otherwise>
 </c:choose>
 </body>
+
 </html>

@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.dao.DuplicateKeyException;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2017/6/13 0013.
@@ -18,7 +19,11 @@ public interface UserDAO {
 
     void add(@Param("username") String username,@Param("password") String password) throws DuplicateKeyException;
 
-    User queryFetchMovie(int id);
+    User queryFetchMovie(String username);
 
     User queryByUserName(@Param("username") String username);
+
+    int queryUserIdByUserName(String username);
+
+    Set<String> queryRoles(String username);
 }

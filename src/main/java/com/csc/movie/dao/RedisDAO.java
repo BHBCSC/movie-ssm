@@ -1,6 +1,8 @@
 package com.csc.movie.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -11,25 +13,25 @@ import redis.clients.jedis.JedisPool;
 @Component
 public class RedisDAO {
     @Autowired
-    private JedisPool jedisPool;
+    private StringRedisTemplate stringRedis;
+
 
     public void set(String key, String value) {
-        Jedis jedis = jedisPool.getResource();
-        jedis.set(key, value);
+        stringRedis.opsForValue().set(key, value);
     }
 
     public String get(String key) {
-        Jedis jedis = jedisPool.getResource();
-        return jedis.get(key);
+        return stringRedis.opsForValue().get(key);
     }
 
     public void lsetMovieScoreUpdate(long index, int value) {
-        Jedis jedis = jedisPool.getResource();
-        jedis.lset("scoreModifiedTimes", index, String.valueOf(value));
+        stringRedis.opsForList().set("scoreModifiedTimes", index, String.valueOf(value));
     }
 
     public int lgetMovieScoreUpdate(long index) {
-        Jedis jedis = jedisPool.getResource();
-        return Integer.parseInt(jedis.lindex("scoreModifiedTimes", index));
+        return Integer.parseInt(stringRedis.opsForList().index("scoreModifiedTimes", index));
     }
+
 }
+
+

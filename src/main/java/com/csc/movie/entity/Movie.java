@@ -42,4 +42,24 @@ public class Movie implements Serializable {
     public List<Celebrity> getCelebrityList() {
         return celebrityList;
     }
+
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
+    }
+
+    public void setWatchedList(List<Watched> watchedList) {
+        this.watchedList = watchedList;
+    }
+
+    public void setCelebrityList(List<Celebrity> celebrityList) {
+        this.celebrityList = celebrityList;
+    }
 }

@@ -27,9 +27,28 @@ public class MovieServiceImpl implements MovieService {
         return movieDAO.queryById(id, limit);
     }
 
+    @Override
+    public List<Movie> getMovies(int offset, int limit) {
+        movieDAO.queryAll(offset, limit);
+    }
+
     public Movie getMovieById(int id) {
         int count = movieDAO.count();
         return movieDAO.queryById(id, count);
+    }
+
+    @Override
+    public List<Movie> getMoviesByName(String name, int offset, int limit) {
+        return movieDAO.queryLikeName(name, offset, limit);
+    }
+
+    @Override
+    public int getMoviePages(int limit) {
+        int count = movieDAO.count();
+
+        int pages = (count % limit == 0) ? count / limit : count / limit + 1;
+
+        return pages;
     }
 
     //返回null表示没看过
@@ -65,5 +84,25 @@ public class MovieServiceImpl implements MovieService {
         score = score / size;
         score = ((float) Math.round(score * 100) / 100);
         movieDAO.update(movieId, score);
+    }
+
+    @Override
+    public int getMoviesByNameCount(String name) {
+        return movieDAO.queryLikeNameCount(name);
+    }
+
+    @Override
+    public void addMovie(Movie movie) {
+        movieDAO.add(movie.getName());
+    }
+
+    @Override
+    public void deleteMovie(int id) {
+        movieDAO.delete(id);
+    }
+
+    @Override
+    public void modifyMovie(Movie movie) {
+        movieDAO.modify(movie.getMovieId(), movie.getName());
     }
 }

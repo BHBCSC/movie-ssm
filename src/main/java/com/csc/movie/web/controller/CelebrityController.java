@@ -1,4 +1,4 @@
-package com.csc.movie.web;
+package com.csc.movie.web.controller;
 
 import com.csc.movie.entity.Celebrity;
 import com.csc.movie.entity.User;

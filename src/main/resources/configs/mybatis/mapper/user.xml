@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.csc.movie.dao.UserDAO">
 
     <resultMap id="UserWatchedMovieResultMap" type="com.csc.movie.entity.User">
@@ -20,7 +20,8 @@
     </resultMap>
 
     <select id="queryByUserName" resultType="com.csc.movie.entity.User">
-        SELECT username
+        SELECT
+        username,password
         FROM
             user
         WHERE
@@ -43,8 +44,17 @@
         u.user_id,u.username,m.movie_id,m.name ,m.score as score,w.score as yourscore,w.comment
         FROM
         user u,watched w,movie m
-        WHERE u.user_id = w.user_id AND w.movie_id = m.movie_id AND u.user_id = #{id}
+        WHERE
+        u.user_id = w.user_id AND w.movie_id = m.movie_id AND u.username = #{username}
 
+    </select>
+
+    <select id="queryRoles" resultType="String">
+        SELECT role
+        FROM
+            user u, role r, user_role ur
+        WHERE
+            u.user_id = ur.user_id AND r.id = ur.role_id AND u.username = username
     </select>
 
     <insert id="add">
@@ -66,6 +76,14 @@
             id
         LIMIT #{offset}, #{limit}
     </select>-->
+
+    <select id="queryUserIdByUserName" resultType="int">
+        SELECT user_id
+        FROM
+            user
+        WHERE
+            username = #{username}
+    </select>
 
     <select id="count" resultType="int">
         SELECT
