@@ -81,3 +81,4 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 /.idea*
+/app-web/src/main/webapp/WEB-INF/todo-list.txt
