@@ -5,12 +5,12 @@
 
 package com.csc.movie.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.csc.movie.dao.UserDAO;
 import com.csc.movie.entity.User;
 import com.csc.movie.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.stereotype.Service;
 
 import java.util.Set;
 

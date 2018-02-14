@@ -1,5 +1,6 @@
 package com.csc.movie.aspect;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.csc.movie.dao.RedisDAO;
 import com.csc.movie.service.MovieService;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class MovieScoreAspect {
-    @Autowired
+    @Reference
     MovieService movieService;
     @Autowired
     RedisDAO redisDAO;

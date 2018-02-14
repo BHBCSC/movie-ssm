@@ -1,9 +1,8 @@
 package com.csc.movie.web.controller;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.csc.movie.entity.Celebrity;
-import com.csc.movie.entity.User;
 import com.csc.movie.service.CelebrityService;
-import com.csc.movie.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +14,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping({"/celebrity"})
 public class CelebrityController {
-    @Autowired
+    @Reference
     private CelebrityService celebrityService;
 
     public CelebrityController() {

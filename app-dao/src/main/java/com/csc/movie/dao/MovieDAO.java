@@ -24,7 +24,7 @@ public interface MovieDAO {
 
     void add(String name);
 
-    void modify(@Param("movieId") int id, @Param("name") String name);
+    void modify(@Param("movieId") int id, @Param("name") String name);//TODO
 
     void delete(int id);
 }

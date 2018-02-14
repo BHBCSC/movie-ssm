@@ -4,6 +4,7 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
         http://www.springframework.org/schema/context
@@ -11,12 +12,21 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
         http://www.springframework.org/schema/tx
-        http://www.springframework.org/schema/tx/spring-tx.xsd">
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+">
 
+    <import resource="dao.xml"/>
     <!-- 扫描service包下所有使用注解的类型 -->
     <context:component-scan base-package="com.csc.movie.service" />
     <context:component-scan base-package="com.csc.movie.aspect"/>
     <aop:aspectj-autoproxy/>
+
+    <dubbo:application name="movie_service"/>
+    <dubbo:annotation package="com.csc.movie.service.impl"/>
+    <dubbo:registry address="zookeeper://192.168.126.128:2181"/>
+
 
     <!-- 配置事务管理器 -->
     <bean id="transactionManager"

@@ -1,14 +1,12 @@
 package com.csc.movie.web.controller;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.csc.movie.entity.Movie;
 import com.csc.movie.entity.Watched;
 import com.csc.movie.service.MovieService;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
-import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +22,7 @@ import java.util.List;
 @Controller
 @RequestMapping({"/movie"})
 public class MovieController {
-    @Autowired
+    @Reference
     MovieService movieService;
 
     public MovieController() {
@@ -116,7 +114,7 @@ public class MovieController {
 
     @RequiresRoles("admin")
     @RequestMapping({"/add"})
-    public String add(@RequestParam String name, Model model) {
+    public String add(@RequestParam(required = false) String name, Model model) {
         if (name != null) {
             if (name != "" && !name.equals("")) {
                 Movie movie = new Movie();

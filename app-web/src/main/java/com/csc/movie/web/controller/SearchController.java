@@ -1,5 +1,6 @@
 package com.csc.movie.web.controller;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.csc.movie.entity.Movie;
 import com.csc.movie.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.List;
 @Controller
 @RequestMapping({"/search"})
 public class SearchController {
-    @Autowired
+    @Reference
     MovieService movieService;
 
     @RequestMapping(value = {""}, method = RequestMethod.GET)

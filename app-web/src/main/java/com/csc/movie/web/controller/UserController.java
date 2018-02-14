@@ -1,5 +1,6 @@
 package com.csc.movie.web.controller;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.csc.movie.entity.User;
 import com.csc.movie.service.UserService;
 
@@ -9,15 +10,13 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping({"/user"})
 public class UserController {
-    @Autowired
+    @Reference
     private UserService userService;
-
 
     public UserController() {
     }

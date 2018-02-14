@@ -1,9 +1,12 @@
 package com.csc.movie.web.controller;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.csc.movie.entity.User;
 import com.csc.movie.service.AccountService;
+import com.csc.movie.service.UserService;
 import com.csc.movie.shiro.filter.MyFormAuthenticationFilter;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,24 +24,33 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping({"/account"})
 public class AccountController {
-    @Autowired
+    @Reference
     private AccountService accountService;
+
+    @Reference
+    private UserService userService;
 
     @RequestMapping({"/unauthorized"})
     public String unauthorized() {
         return "unauthorized";
     }
 
-    @RequestMapping({"/login"})
+    @RequestMapping(value = {"/login"})
     public ModelAndView login(HttpServletRequest request) {
 
         ModelAndView mv = new ModelAndView("/account/login");
 
+        System.out.println(SecurityUtils.getSubject().isAuthenticated());
+        System.out.println(SecurityUtils.getSubject().getPrincipal());
         //已经登陆过
         if (SecurityUtils.getSubject().isAuthenticated()) {
+            String username = (String) SecurityUtils.getSubject().getPrincipal();
+            User user = userService.getMovieList(username);
+            mv.addObject("watchedList", user.getWatchedList());
             mv.setViewName("/user/mine");
             return mv;
         }
+
 
         String exceptionClassName = (String) request.getAttribute(MyFormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
         String error = null;
@@ -47,9 +59,9 @@ public class AccountController {
                 error = "用户名/密码错误";
             } else if (IncorrectCredentialsException.class.getName().equals(exceptionClassName)) {
                 error = "用户名/密码错误";
-            }/*else if(AuthenticationException.class.getName().equals(exceptionClassName)) {
+            } else if (AuthenticationException.class.getName().equals(exceptionClassName)) {
             error = "用户名/密码错误";
-            }*/ else if (exceptionClassName != null) {
+            } else if (exceptionClassName != null) {
                 error = "其他错误：" + exceptionClassName;
             }
             mv.addObject("error", error);

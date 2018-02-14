@@ -2,11 +2,20 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
         http://www.springframework.org/schema/util
         http://www.springframework.org/schema/util/spring-util.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
        ">
+
+    <!--Duboo 消费者配置 -->
+    <dubbo:annotation package="com.csc.movie.web.controller"/>
+    <dubbo:application name="movie_web"/>
+
+    <dubbo:registry address="zookeeper://192.168.126.128:2181"/>
 
     <!-- Realm实现 -->
     <bean id="userRealm" class="com.csc.movie.shiro.UserRealm">
@@ -92,7 +101,7 @@
         <property name="unauthorizedUrl" value="/account/unauthorized"/>
         <property name="filters">
             <util:map>
-                <entry key="authc" value-ref="MyFilter"/>
+                <entry key="authc1" value-ref="MyFilter"/>
             </util:map>
         </property>
         <property name="filterChainDefinitions">
@@ -100,11 +109,12 @@
             <!-- authc：该过滤器下的页面必须验证后才能访问,
             它是Shiro内置的一个拦截器org.apache.shiro.web.filter.authc.FormAuthenticationFilter -->
             <value>
-                /account/login = authc
+                /account/login = anon
                 /user/mine = user
                 /movie/watched = user
                 /movie/delete = user
                 /account/logout = logout
+                / = authc1
                 /** = anon
             </value>
         </property>
@@ -112,6 +122,5 @@
 
     <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
-
 
 </beans>

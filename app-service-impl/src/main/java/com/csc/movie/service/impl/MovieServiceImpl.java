@@ -1,16 +1,17 @@
 package com.csc.movie.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.csc.movie.dao.MovieDAO;
 import com.csc.movie.dao.WatchedDAO;
 import com.csc.movie.entity.Movie;
 import com.csc.movie.entity.Watched;
 import com.csc.movie.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@org.springframework.stereotype.Service(value = "movieService")
 public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieDAO movieDAO;
