@@ -11,6 +11,8 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
@@ -18,11 +20,12 @@ import java.util.Set;
 /**
  * Created by Administrator on 2017/8/9 0009.
  */
+@Component(value = "userRealm")
 public class UserRealm extends AuthorizingRealm {
-    @Reference
+    @Autowired
     private AccountService accountService;
 
-    //private static final Log log = LogFactory.getLog(AuthorizingRealm.class);
+    private static final Log log = LogFactory.getLog(AuthorizingRealm.class);
 
     //权限验证
     @Override
@@ -41,6 +44,8 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String username = (String) token.getPrincipal();
 
+        log.info("username is " + username);
+        log.info(accountService);
         User user = accountService.getUser(username);
 
         if (user == null)
@@ -52,13 +57,5 @@ public class UserRealm extends AuthorizingRealm {
         );
 
         return authenticationInfo;
-    }
-
-    public AccountService getAccountService() {
-        return accountService;
-    }
-
-    public void setAccountService(AccountService accountService) {
-        this.accountService = accountService;
     }
 }

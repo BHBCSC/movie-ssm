@@ -23,10 +23,7 @@ import java.util.List;
 @RequestMapping({"/movie"})
 public class MovieController {
     @Reference
-    MovieService movieService;
-
-    public MovieController() {
-    }
+    private MovieService movieService;
 
     @RequestMapping({"/"})
     public ModelAndView movies(@RequestParam(value = "page", defaultValue = "1") int page) {

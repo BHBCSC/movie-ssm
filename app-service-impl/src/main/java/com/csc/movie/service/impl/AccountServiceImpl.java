@@ -19,9 +19,6 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private UserDAO userDAO;
 
-    public AccountServiceImpl() {
-    }
-
     public User getUser(String username) {
         return userDAO.queryByUserName(username);
     }

@@ -9,6 +9,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping({"/account"})
 public class AccountController {
-    @Reference
+    @Autowired
     private AccountService accountService;
 
     @Reference
@@ -37,6 +39,23 @@ public class AccountController {
 
     @RequestMapping(value = {"/login"})
     public ModelAndView login(HttpServletRequest request) {
+
+        //========
+        /*String userName = request.getParameter("username");
+        String password = request.getParameter("password");
+        UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
+        token.setRememberMe(true);
+        Subject subject = SecurityUtils.getSubject();
+        System.out.println("added login");
+
+        if(userName != null && password != null){
+            subject.login(token);
+            if (subject.isAuthenticated()) {
+                return new ModelAndView("/user/mine");
+            }
+        }*/
+
+
 
         ModelAndView mv = new ModelAndView("/account/login");
 

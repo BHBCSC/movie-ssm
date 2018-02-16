@@ -16,6 +16,7 @@
         http://code.alibabatech.com/schema/dubbo
         http://code.alibabatech.com/schema/dubbo/dubbo.xsd ">
 
+    <!--<import resource="shiro.xml"/>-->
 
     <!-- 配置SpringMVC -->
     <!-- 开启SpringMVC注解模式 -->
@@ -30,6 +31,15 @@
         (2)允许使用"/"做整体映射
      -->
     <mvc:default-servlet-handler/>
+
+    <!--Duboo 消费者配置 -->
+    <dubbo:annotation package="com.csc.movie.web.controller"/>
+    <dubbo:reference interface="com.csc.movie.service.AccountService" id="accountService" check="false"/>
+    <dubbo:annotation package="com.csc.movie.shiro"/>
+    <!--<dubbo:application name="movie_web"/>-->
+    <dubbo:registry address="zookeeper://192.168.126.128:2181"/>
+    <dubbo:consumer timeout="3000"/>
+
 
     <!-- json resolver-->
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">

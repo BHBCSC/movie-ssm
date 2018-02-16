@@ -1,11 +1,12 @@
 package com.csc.movie.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/6/11 0011.
  */
-public class User {
+public class User implements Serializable {
     private int id;
     private String username;
     private String password;

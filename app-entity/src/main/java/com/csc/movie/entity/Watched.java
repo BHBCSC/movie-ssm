@@ -1,9 +1,11 @@
 package com.csc.movie.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/6/24 0024.
  */
-public class Watched {
+public class Watched implements Serializable {
     private User user;
     private Movie movie;
     private int score;

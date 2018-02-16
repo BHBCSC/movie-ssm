@@ -3,64 +3,71 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
         http://www.springframework.org/schema/util
         http://www.springframework.org/schema/util/spring-util.xsd
         http://code.alibabatech.com/schema/dubbo
         http://code.alibabatech.com/schema/dubbo/dubbo.xsd
-       ">
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
 
     <!--Duboo 消费者配置 -->
-    <dubbo:annotation package="com.csc.movie.web.controller"/>
-    <dubbo:application name="movie_web"/>
 
     <dubbo:registry address="zookeeper://192.168.126.128:2181"/>
+    <dubbo:annotation package="com.csc.movie.shiro"/>
+    <dubbo:consumer timeout="3000"/>
+    <dubbo:application name="movie_shiro"/>
+    <context:component-scan base-package="com.csc.movie.shiro"/>
+    <dubbo:reference interface="com.csc.movie.service.AccountService" id="accountService" check="false"/>
+    <!--  <context:component-scan base-package="com.csc.movie.shiro"/>-->
 
     <!-- Realm实现 -->
-    <bean id="userRealm" class="com.csc.movie.shiro.UserRealm">
-        <!--
+    <!--<bean id="userRealm" class="com.csc.movie.shiro.UserRealm">
+        &lt;!&ndash;
         <property name="userService" ref="userService"/>
         <property name="authenticationCachingEnabled" value="true"/>
         <property name="authenticationCacheName" value="authenticationCache"/>
         <property name="authorizationCachingEnabled" value="true"/>
-        <property name="authorizationCacheName" value="authorizationCache"/>-->
-    </bean>
-
-    <!--会话ID生成器 -->
-    <bean id="sessionIdGenerator"
-          class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
-    <!-- 会话DAO -->
-    <bean id="sessionDAO"
-          class="com.csc.movie.session.RedisSessionDAO">
-        <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
-    </bean>
-    <!-- 会话验证调度器 验证过期-->
-    <bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler">
-        <property name="sessionValidationInterval" value="1800000"/>
-        <property name="sessionManager" ref="sessionManager"/>
-    </bean>
-    <!-- 会话管理器 -->
-    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-        <property name="globalSessionTimeout" value="1800000"/>
-        <property name="deleteInvalidSessions" value="true"/>
-        <property name="sessionValidationSchedulerEnabled" value="true"/>
-        <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
-        <property name="sessionDAO" ref="sessionDAO"/>
-        <property name="sessionIdCookieEnabled" value="true"/>
-        <property name="sessionIdCookie" ref="sessionIdCookie"/>
-    </bean>
-    <!-- 会话Cookie模板 -->
-    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-        <constructor-arg value="sid"/>
-        <property name="httpOnly" value="true"/>
-        <property name="maxAge" value="180000"/>
-    </bean>
+        <property name="authorizationCacheName" value="authorizationCache"/>&ndash;&gt;
+    </bean>-->
+    <!--
+        &lt;!&ndash;会话ID生成器 &ndash;&gt;
+        <bean id="sessionIdGenerator"
+              class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
+        &lt;!&ndash; 会话DAO &ndash;&gt;
+        <bean id="sessionDAO"
+              class="com.csc.movie.session.RedisSessionDAO">
+            <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
+        </bean>
+        &lt;!&ndash; 会话验证调度器 验证过期&ndash;&gt;
+        <bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler">
+            <property name="sessionValidationInterval" value="1800000"/>
+            <property name="sessionManager" ref="sessionManager"/>
+        </bean>
+        &lt;!&ndash; 会话管理器 &ndash;&gt;
+        <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+            <property name="globalSessionTimeout" value="1800000"/>
+            <property name="deleteInvalidSessions" value="true"/>
+            <property name="sessionValidationSchedulerEnabled" value="true"/>
+            <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
+            <property name="sessionDAO" ref="sessionDAO"/>
+            <property name="sessionIdCookieEnabled" value="true"/>
+            <property name="sessionIdCookie" ref="sessionIdCookie"/>
+        </bean>
+        &lt;!&ndash; 会话Cookie模板 &ndash;&gt;
+        <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+            <constructor-arg value="sid"/>
+            <property name="httpOnly" value="true"/>
+            <property name="maxAge" value="180000"/>
+        </bean>-->
 
     <!-- 安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="userRealm"/>
-        <property name="sessionManager" ref="sessionManager"/>
+        <!--<property name="sessionManager" ref="sessionManager"/>-->
     </bean>
 
     <!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->

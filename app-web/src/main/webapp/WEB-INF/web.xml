@@ -55,6 +55,7 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+
     <!--shiro filter-->
     <filter>
         <filter-name>shiroFilter</filter-name>
@@ -68,5 +69,4 @@
         <filter-name>shiroFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
 </web-app>
